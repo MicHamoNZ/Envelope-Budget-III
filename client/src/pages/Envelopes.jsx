@@ -1,9 +1,11 @@
-
-
 export function Envelopes() {
-    return (
-        <>
-            <h3>Envelopes Page</h3>
-        </>
-    )
+  return (
+    <>
+      <div className='App'>
+        <header className='App-header'>
+          <h3>Envelopes Page</h3>
+        </header>
+      </div>
+    </>
+  );
 }
