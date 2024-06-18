@@ -1,0 +1,17 @@
+.navbar {
+    top: 0;
+    left: 25%;
+    width: 50%;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: teal;
+    border-radius: 10px;
+}
+
+.navbutton {
+    color: white;
+    background-color: black;
+}
