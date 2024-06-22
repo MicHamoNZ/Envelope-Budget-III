@@ -1,18 +1,22 @@
-import { Link } from 'react-router-dom';
-import './Navbar.css';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
-export function Navbar() {
+function BasicExample() {
   return (
-    <div className='navbar'>
-      <Link to='/'>
-        <button className='navbutton'>Home</button>
-      </Link>
-      <Link to='/Envelopes'>
-        <button className='navbutton'>Envelopes</button>
-      </Link>
-      <Link to='/Transactions'>
-        <button className='navbutton'>Transactions</button>
-      </Link>
-    </div>
+    <Navbar expand='lg' className='bg-body-tertiary'>
+      <Container>
+        <Navbar.Brand href='#'>Home</Navbar.Brand>
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+        <Navbar.Collapse id='basic-navbar-nav'>
+          <Nav className='me-auto'>
+            <Nav.Link href='#envelopes'>Envelopes</Nav.Link>
+            <Nav.Link href='#transactions'>Transactions</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
+
+export default BasicExample;

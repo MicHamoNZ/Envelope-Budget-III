@@ -1,4 +1,4 @@
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
@@ -16,8 +16,6 @@ function App() {
         </Route>
       </Routes>
     </Router>
-    /*
-     */
   );
 }
 
