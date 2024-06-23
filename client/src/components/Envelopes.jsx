@@ -14,28 +14,30 @@ function Budget() {
   }, []);
 
   return (
-    <Table striped bordered hover responsive size='sm'>
-      <thead>
-        <tr>
-          <th>Envelope Id</th>
-          <th>Description</th>
-          <th>Budget</th>
-        </tr>
-      </thead>
-      {typeof budgetData.data === 'undefined' ? (
-        <Spinner animation='border' />
-      ) : (
-        budgetData.data.map((envelope, i) => (
-          <tbody>
-            <tr key={i}>
-              <td>{envelope.id}</td>
-              <td>{envelope.envelope_name}</td>
-              <td>{envelope.budget}</td>
-            </tr>
-          </tbody>
-        ))
-      )}
-    </Table>
+    <>
+      <Table striped bordered hover responsive size='sm'>
+        <thead>
+          <tr>
+            <th>Envelope Id</th>
+            <th>Description</th>
+            <th>Budget</th>
+          </tr>
+        </thead>
+        <tbody>
+          {typeof budgetData.data === 'undefined' ? (
+            <Spinner animation='border' />
+          ) : (
+            budgetData.data.map((envelope, i) => (
+              <tr key={i}>
+                <td>{envelope.id}</td>
+                <td>{envelope.envelope_name}</td>
+                <td>{envelope.budget}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </Table>
+    </>
   );
 }
 
