@@ -41,6 +41,6 @@
     ]
   },
   "devDependencies": {
-    "babel": "@babel/plugin-proposal-private-property-in-object"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
