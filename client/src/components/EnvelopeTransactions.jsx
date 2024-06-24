@@ -2,14 +2,14 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import React, { useEffect, useState } from 'react';
 
-function Budget() {
-  const [budgetData, setBudgetData] = useState([{}]);
+const EnvelopeTransactions = () => {
+  const [transactionData, setTransactionData] = useState([{}]);
 
   useEffect(() => {
-    fetch('/envelopes')
+    fetch('/envelopes/3/transactions')
       .then((response) => response.json())
       .then((data) => {
-        setBudgetData(data);
+        setTransactionData(data);
       });
   }, []);
 
@@ -18,20 +18,23 @@ function Budget() {
       <Table striped bordered hover responsive size='sm'>
         <thead>
           <tr>
-            <th>Envelope Id</th>
+            <th>Transaction Id</th>
+            <th>Transaction Date</th>
+            <th>Amount</th>
             <th>Description</th>
-            <th>Budget</th>
           </tr>
         </thead>
         <tbody>
-          {typeof budgetData.data === 'undefined' ? (
+          {' '}
+          {typeof transactionData.data === 'undefined' ? (
             <Spinner animation='border' />
           ) : (
-            budgetData.data.map((envelope, i) => (
+            transactionData.data.map((envelope, i) => (
               <tr key={i}>
                 <td>{envelope.id}</td>
-                <td>{envelope.envelope_name}</td>
-                <td>{envelope.budget}</td>
+                <td>{envelope.transaction_dt}</td>
+                <td>{envelope.amount}</td>
+                <td>{envelope.description}</td>
               </tr>
             ))
           )}
@@ -39,6 +42,6 @@ function Budget() {
       </Table>
     </>
   );
-}
+};
 
-export default Budget;
+export default EnvelopeTransactions;

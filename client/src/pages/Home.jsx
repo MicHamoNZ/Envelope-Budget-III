@@ -1,5 +1,5 @@
 import Container from 'react-bootstrap/Container';
-import Budget from '../components/Envelopes';
+import Budget from '../components/Budget';
 
 export function Home() {
   return (
