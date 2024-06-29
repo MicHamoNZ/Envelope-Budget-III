@@ -1,30 +1,47 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 router.use(express.json());
 
 const {
-    getEnvelopes,
-    getEnvelopeById,
-    addEnvelope,
-    updateEnvelope,
-    deleteEnvelope,
-    addEnvelopeTransaction,
-    getEnvelopeTransactions
-} = require('../controllers/envelopes')
+  getEnvelopes,
+  getEnvelopeById,
+  getEnvelopeTransactions,
+  addEnvelope,
+  deleteEnvelope,
+  updateEnvelope,
+  addEnvelopeTransaction,
+} = require('../controllers/envelopes');
 
-router.get('/envelopes/', getEnvelopes);
+/**
+ *  @swagger
+ *  /api/v1/envelopes:
+ *      get:
+ *          summary: Get all envelopes
+ *          produces:
+ *              - application/json
+ *          tags:
+ *              - Envelopes
+ *          responses:
+ *              "200":
+ *                  description: Returns a list of all envelopes
+ *
+ */
+router.get('/', getEnvelopes);
 
-router.get('/envelopes/:id', getEnvelopeById);
+/**
+ *
+ */
+router.get('/:id', getEnvelopeById);
 
-router.post('/envelopes/', addEnvelope);
+router.post('/', addEnvelope);
 
-router.put('/envelopes/:id', updateEnvelope);
+router.put('/:id', updateEnvelope);
 
-router.delete('/envelopes/:id', deleteEnvelope);
+router.delete('/:id', deleteEnvelope);
 
-router.get('/envelopes/:id/transactions', getEnvelopeTransactions);
+router.get('/:id/transactions', getEnvelopeTransactions);
 
-router.post('/envelopes/:id/transactions', addEnvelopeTransaction);
+router.post('/:id/transactions', addEnvelopeTransaction);
 
 module.exports = router;

@@ -8,24 +8,22 @@ app.use(logger('dev'));
 
 app.use(bodyParser.json());
 app.use(
-    bodyParser.urlencoded({
-        extended: true,
-    })
+  bodyParser.urlencoded({
+    extended: true,
+  })
 );
 
 const PORT = process.env.PORT || 5001;
 
-app.get('/api', (req, res) => {
-    res.json({ info: ["node.js", "Express", "Postgres", "API"] })
-});
-
 const envelopesRouter = require('./routes/envelopes');
-app.use(envelopesRouter);
+app.use('/api/v1/envelopes', envelopesRouter);
 
 const transactionsRouter = require('./routes/transactions');
-app.use(transactionsRouter);
+app.use('/api/v1/transactions', transactionsRouter);
 
+const docsRouter = require('./routes/docs');
+app.use('/api/v1/swagger', docsRouter);
 
 app.listen(PORT, () => {
-    console.log(`Listening on ${PORT}`);
+  console.log(`Listening on ${PORT}`);
 });
