@@ -14,23 +14,44 @@ const {
 } = require('../controllers/envelopes');
 
 /**
- *  @swagger
- *  /api/v1/envelopes:
- *      get:
- *          summary: Get all envelopes
- *          produces:
- *              - application/json
- *          tags:
- *              - Envelopes
- *          responses:
- *              "200":
- *                  description: Returns a list of all envelopes
+ * @swagger
+ * /api/v1/envelopes:
+ *    get:
+ *      summary: Get all envelopes
+ *      produces:
+ *        - application/json
+ *      tags:
+ *        - Envelopes
+ *      responses:
+ *        "200":
+ *          description: Returns a list of all envelopes
  *
  */
 router.get('/', getEnvelopes);
 
 /**
- *
+ * @swagger
+ * /api/v1/envelopes/{id}:
+ *    get:
+ *      summary: Get an envelope by ID
+ *      produces:
+ *        - application/json
+ *      tags:
+ *        - Envelopes
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: envelope id
+ *          type: integer
+ *          required: true
+ *          example: 1
+ *      responses:
+ *        "200":
+ *          description: Returns a an envelope along with its data
+ *        "404":
+ *          description: Envelope not found
+ *        "500":
+ *          description: Internal server error
  */
 router.get('/:id', getEnvelopeById);
 

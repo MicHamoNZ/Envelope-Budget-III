@@ -5,7 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 
 const swaggerOptions = {
   swaggerDefinition: {
-    openapi: '3.0.1',
+    openapi: '3.0.0',
     info: {
       title: 'Envelope Budget III',
       version: '1.0.0',
@@ -17,7 +17,10 @@ const swaggerOptions = {
       },
     },
   },
-  apis: ['../routes/envelopes.js', '../routes/transactions.js'],
+  apis: [
+    '../../server/routes/envelopes.js',
+    '../../server/routes/transactions.js',
+  ],
 };
 
 const specs = swagger(swaggerOptions);
