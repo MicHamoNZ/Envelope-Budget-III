@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5001;
 const envelopesRouter = require('./routes/envelopes');
 app.use('/api/v1/envelopes', envelopesRouter);
 
-const transactionsRouter = require('./routes/transactions');
+const transactionsRouter = require('./routes/transactions.js');
 app.use('/api/v1/transactions', transactionsRouter);
 
 const docsRouter = require('./routes/docs');

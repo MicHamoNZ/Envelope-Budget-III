@@ -121,7 +121,7 @@ router.post('/', addEnvelope);
  *                budget: 500
  *      responses:
  *        "201":
- *          description: Returns created envelope.
+ *          description: Returns updated envelope.
  *        "404":
  *          description: Envelope not found.
  *        "500":
@@ -134,7 +134,7 @@ router.put('/:id', updateEnvelope);
  * @swagger
  * /api/v1/envelopes:
  *    delete:
- *      summary: Creates a new envelope
+ *      summary: Deletes an envelope
  *      produces:
  *        - application/json
  *      tags:
@@ -161,7 +161,7 @@ router.delete('/:id', deleteEnvelope);
  * @swagger
  * /api/v1/envelopes/{id}/transactions:
  *    get:
- *      summary: Get an envelope transactions by envelope Id
+ *      summary: Get an envelope's transactions
  *      produces:
  *        - application/json
  *      tags:

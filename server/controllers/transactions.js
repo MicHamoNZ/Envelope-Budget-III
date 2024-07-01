@@ -52,59 +52,75 @@ exports.getTransactionById = async (req, res) => {
 
 // @desc        Update a transaction
 // @route       PUT /api/v1/transactions/:id
-exports.updateTransactions = async (res, req) => {
+exports.updateTransactions = async (req, res) => {
   const { id } = req.params;
-  const { description, amount, date } = req.body;
+  const { description, amount, transaction_dt } = req.body;
 
-  const transactionQuery = `SELECT *
-        FROM transactions
-        WHERE id = $1;`;
-  const previousAmountQuery = `SELECT amount
-        FROM transactions 
-        WHERE id = $1;`;
-  const updateTransactionQuery = `UPDATE transactions
-        SET description = $1,
-            amount = $2,
-            transaction_dt = $3
-        WHERE id = $4
-        RETURNING *;`;
-  const updateEnvelopeBudgetQuery = `UPDATE
-            envelopes
-        SET
-            budget = (budget + CAST($1 AS money) - CAST($2 AS money))
-        WHERE id IN (SELECT envelope_id FROM transactions WHERE id = $3);`;
+  const transactionQuery = `
+    SELECT *
+    FROM transactions
+    WHERE id = $1;
+  `;
+
+  const previousAmountQuery = `
+    SELECT amount
+    FROM transactions
+    WHERE id = $1;
+  `;
+
+  const updateTransactionQuery = `
+    UPDATE transactions
+    SET description = $1,
+      amount = $2,
+      transaction_dt = $3
+    WHERE id = $4
+    RETURNING *;
+  `;
+
+  const updateEnvelopeBudgetQuery = `
+    UPDATE envelopes
+    SET budget = (budget + CAST($1 AS money) - CAST($2 AS money))
+    WHERE id = (
+      SELECT envelope_id
+      FROM transactions
+      WHERE id = $3
+    );
+  `;
+
   try {
     // SQL TRANSACTION
     await db.query('BEGIN');
     const transaction = await db.query(transactionQuery, [id]);
     if (transaction.rowCount < 1) {
-      return res.status(404).send({
+      return resizeTo.status(404).send({
         message: 'No transaction information found.',
       });
     }
-    const prevAmount = await db.query(previousQueryAmount, [id]);
+
+    const prevAmount = await db.query(previousAmountQuery, [id]);
+
+    const updatedTransaction = await db.query(updateTransactionQuery, [
+      description,
+      amount,
+      transaction_dt,
+      id,
+    ]);
+
     await db.query(updateEnvelopeBudgetQuery, [
       prevAmount.rows[0].amount,
       amount,
       id,
     ]);
-    const updatedTransaction = await db.query(updateTransactionQuery, [
-      description,
-      amount,
-      date,
-      id,
-    ]);
+
     await db.query('COMMIT');
+
     res.status(201).send({
       status: 'Success',
       message: 'Transaction has been updated.',
       data: updatedTransaction.rows[0],
     });
   } catch (error) {
-    await db.query('ROLLBACK');
-    return res.status(500).send({
-      error: error.message,
-    });
+    return res.status(500).send({ error: error.message });
   }
 };
 
@@ -113,31 +129,29 @@ exports.updateTransactions = async (res, req) => {
 exports.deleteTransaction = async (req, res) => {
   const { id } = req.params;
   const updateEnvBudgetQuery = `
-            UPDATE
-                envelopes
-            SET
-                budget = budget + $1
-            WHERE id IN 
-                (
-                    SELECT envelope_id
-                    FROM transactions
-                    WHERE id = $2;
-                );
-        `;
+      UPDATE envelopes
+      SET budget = budget + $1
+      WHERE id IN 
+        (
+          SELECT envelope_id
+          FROM transactions
+          WHERE id = $2;
+        );
+  `;
   const transactionQuery = `
-            SELECT *
-            FROM transactions
-            WHERE id = $1;
-        `;
+      SELECT *
+      FROM transactions
+      WHERE id = $1;
+  `;
   const transactionAmountQuery = `
-            SELECT amount
-            FROM transactions
-            WHERE id = $1;
-        `;
+      SELECT amount
+      FROM transactions
+      WHERE id = $1;
+  `;
   const deleteTransaction = `
-            DELETE FROM transactions
-            WHERE id = $1;
-        `;
+      DELETE FROM transactions
+      WHERE id = $1;
+  `;
 
   try {
     // SQL TRANSACTION
@@ -167,6 +181,7 @@ exports.deleteTransaction = async (req, res) => {
   }
 };
 
+/*
 // @desc        GET a transactions by date
 // @route       GET /api/v1/transactions?date
 exports.getTransactionsByDate = async (req, res) => {
@@ -192,3 +207,4 @@ exports.getTransactionsByDate = async (req, res) => {
     });
   }
 };
+*/
