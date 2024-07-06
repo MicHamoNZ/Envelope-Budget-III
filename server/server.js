@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const app = express();
 
-app.use(logger('dev'));
+app.use(cors());
+
+app.use(logger(':method :url :res[header]'));
 
 app.use(bodyParser.json());
 app.use(

@@ -5,7 +5,7 @@ export function Envelopes() {
   const [envelopeData, setEnvelopeData] = useState([{}]);
 
   useEffect(() => {
-    fetch('/envelopes/3')
+    fetch('http://localhost:5001/api/v1/envelopes')
       .then((response) => response.json())
       .then((data) => {
         setEnvelopeData(data.data);

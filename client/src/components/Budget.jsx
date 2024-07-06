@@ -5,8 +5,9 @@ import React, { useEffect, useState } from 'react';
 const Budget = () => {
   const [budgetData, setBudgetData] = useState([{}]);
 
+  console.log('Fetch all envelopes!');
   useEffect(() => {
-    fetch('/envelopes')
+    fetch('http://localhost:5001/api/v1/envelopes')
       .then((response) => response.json())
       .then((data) => {
         setBudgetData(data);
