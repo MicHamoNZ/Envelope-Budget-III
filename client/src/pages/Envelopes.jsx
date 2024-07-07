@@ -5,7 +5,7 @@ export function Envelopes() {
   const [envelopeData, setEnvelopeData] = useState([{}]);
 
   useEffect(() => {
-    fetch('http://localhost:5001/api/v1/envelopes')
+    fetch('http://localhost:5001/api/v1/envelopes/3')
       .then((response) => response.json())
       .then((data) => {
         setEnvelopeData(data.data);
@@ -16,9 +16,6 @@ export function Envelopes() {
 
   return (
     <>
-      <h2>
-        {envelopeData.envelope_name} has a balance of {envelopeData.budget}
-      </h2>
       <EnvelopeTransactions />
     </>
   );

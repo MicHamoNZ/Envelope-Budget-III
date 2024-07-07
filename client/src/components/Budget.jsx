@@ -1,5 +1,5 @@
-import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
+import DataTable from './DataTable.jsx';
 import React, { useEffect, useState } from 'react';
 
 const Budget = () => {
@@ -10,36 +10,26 @@ const Budget = () => {
     fetch('http://localhost:5001/api/v1/envelopes')
       .then((response) => response.json())
       .then((data) => {
-        setBudgetData(data);
+        setBudgetData(data.data);
       });
   }, []);
 
-  return (
-    <>
-      <Table striped bordered hover responsive size='sm'>
-        <thead>
-          <tr>
-            <th>Envelope Id</th>
-            <th>Description</th>
-            <th>Budget</th>
-          </tr>
-        </thead>
-        <tbody>
-          {typeof budgetData.data === 'undefined' ? (
-            <Spinner animation='border' />
-          ) : (
-            budgetData.data.map((envelope, i) => (
-              <tr key={i}>
-                <td>{envelope.id}</td>
-                <td>{envelope.envelope_name}</td>
-                <td>{envelope.budget}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
-    </>
-  );
+  const COLUMNS = [
+    {
+      title: 'ID',
+      field: 'id',
+    },
+    {
+      title: 'Envelope',
+      field: 'envelope_name',
+    },
+    {
+      title: 'Amount',
+      field: 'budget',
+    },
+  ];
+
+  return <DataTable data={budgetData} columns={COLUMNS} />;
 };
 
 export default Budget;

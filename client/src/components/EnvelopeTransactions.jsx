@@ -1,47 +1,37 @@
-import Table from 'react-bootstrap/Table';
-import Spinner from 'react-bootstrap/Spinner';
 import React, { useEffect, useState } from 'react';
+import DataTable from './DataTable.jsx';
 
 const EnvelopeTransactions = () => {
   const [transactionData, setTransactionData] = useState([{}]);
 
   useEffect(() => {
-    fetch('/envelopes/3/transactions')
+    fetch('http://localhost:5001/api/v1/envelopes/3/transactions')
       .then((response) => response.json())
       .then((data) => {
-        setTransactionData(data);
+        setTransactionData(data.data);
       });
   }, []);
 
-  return (
-    <>
-      <Table striped bordered hover responsive size='sm'>
-        <thead>
-          <tr>
-            <th>Transaction Id</th>
-            <th>Transaction Date</th>
-            <th>Amount</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {' '}
-          {typeof transactionData.data === 'undefined' ? (
-            <Spinner animation='border' />
-          ) : (
-            transactionData.data.map((envelope, i) => (
-              <tr key={i}>
-                <td>{envelope.id}</td>
-                <td>{envelope.transaction_dt}</td>
-                <td>{envelope.amount}</td>
-                <td>{envelope.description}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
-    </>
-  );
+  const COLUMNS = [
+    {
+      title: 'ID',
+      field: 'id',
+    },
+    {
+      title: 'Date',
+      field: 'transaction_dt',
+    },
+    {
+      title: 'Description',
+      field: 'description',
+    },
+    {
+      title: 'Amount',
+      field: 'amount',
+    },
+  ];
+
+  return <DataTable data={transactionData} columns={COLUMNS} />;
 };
 
 export default EnvelopeTransactions;

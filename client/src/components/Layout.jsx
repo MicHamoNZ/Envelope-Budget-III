@@ -1,10 +1,10 @@
-import BasicExample from './Navbar';
+import BasicNavbar from './BasicNavbar';
 import { Outlet } from 'react-router-dom';
 
 export function Layout() {
   return (
     <>
-      <BasicExample />
+      <BasicNavbar />
       <main>
         <Outlet />
       </main>
